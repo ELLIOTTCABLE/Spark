@@ -4,11 +4,12 @@ module Spark
       
       ##
       # Called from a Rake execution environment, will define a new Rake task
-      # that executes all of your root Specks, recursively.
+      # that executes all of your unbound Specks, recursively (thus running
+      # all defined specks).
       def initialize
-        desc 'Recursively runs all root Specks'
+        desc 'Recursively runs all unbound Specks'
         task :run do
-          Speck::specks.select {|s| s.parent == nil }
+          Speck::unbound.select {|s| s.parent == nil }
             .each {|speck| Spark.playback speck }
         end
         
