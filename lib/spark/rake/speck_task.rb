@@ -9,8 +9,7 @@ module Spark
       def initialize
         desc 'Recursively runs all unbound Specks'
         task :run do
-          Speck::unbound.select {|s| s.parent == nil }
-            .each {|speck| Spark.playback speck }
+          Speck::unbound.each {|speck| Spark.playback speck }
         end
         
       end
