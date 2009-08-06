@@ -2,6 +2,7 @@ lib/spark/core_ext/string.rb
 lib/spark/core_ext.rb
 lib/spark/rake/speck_task.rb
 lib/spark.rb
+LICENSE.text
 Rakefile.rb
 README.markdown
 .manifest

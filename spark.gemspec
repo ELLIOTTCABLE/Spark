@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["elliottcable"]
-  s.date = %q{2009-08-04}
+  s.date = %q{2009-08-06}
   s.description = %q{Rakes are for chumps. *Real* men ignite their specks with sparks!}
   s.email = ["Spark@elliottcable.com"]
-  s.extra_rdoc_files = ["lib/spark/core_ext/string.rb", "lib/spark/core_ext.rb", "lib/spark/rake/speck_task.rb", "lib/spark.rb", "README.markdown"]
-  s.files = ["lib/spark/core_ext/string.rb", "lib/spark/core_ext.rb", "lib/spark/rake/speck_task.rb", "lib/spark.rb", "Rakefile.rb", "README.markdown", ".manifest", "spark.gemspec"]
+  s.extra_rdoc_files = ["lib/spark/core_ext/string.rb", "lib/spark/core_ext.rb", "lib/spark/rake/speck_task.rb", "lib/spark.rb", "LICENSE.text", "README.markdown"]
+  s.files = ["lib/spark/core_ext/string.rb", "lib/spark/core_ext.rb", "lib/spark/rake/speck_task.rb", "lib/spark.rb", "LICENSE.text", "Rakefile.rb", "README.markdown", ".manifest", "spark.gemspec"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/elliottcable/spark}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Spark", "--main", "README.markdown"]
