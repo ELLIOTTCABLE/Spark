@@ -1,3 +1,5 @@
+require 'speck'
+
 require 'spark/core_ext'
 
 module Spark
