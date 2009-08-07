@@ -15,20 +15,22 @@ module Spark
     # - Executing each `Check` belonging to the `Speck`
     # - Printing data about each `Check` and its result
     # - Recursively repeating the above for each child `Speck`
-    def playback speck
-      puts speck.target.inspect
+    def playback speck, indent = 0
+      puts ("  " * indent) + speck.target.inspect
+      indent += 1
+      
       speck.execute
       
       speck.checks.each do |check|
         begin
           check.execute
-          puts check.description.ljust(72) + (" # => " + check.status.inspect).green
+          puts ("  " * indent) + check.description.ljust(72) + (" # => " + check.status.inspect).green
         rescue Speck::Exception::CheckFailed
-          puts check.description.ljust(72) + (" # !  " + check.status.inspect).red
+          puts ("  " * indent) + check.description.ljust(72) + (" # !  " + check.status.inspect).red
         end
       end
       
-      speck.children.each {|speck| Spark.playback speck }
+      speck.children.each {|speck| Spark.playback speck, indent }
     end
     
   end
