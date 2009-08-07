@@ -16,21 +16,34 @@ module Spark
     # - Printing data about each `Check` and its result
     # - Recursively repeating the above for each child `Speck`
     def playback speck, indent = 0
+      # TODO: FUCK FUCK FUCK THIS IS UGLY CODE ARRRGH
       puts ("  " * indent) + speck.target.inspect
       indent += 1
       
       speck.execute
       
-      speck.checks.each do |check|
+      checks = speck.checks.partition do |check|
         begin
           check.execute
           puts ("  " * indent) + check.description.ljust(72) + (" # => " + check.status.inspect).green
+          true
         rescue Speck::Exception::CheckFailed
           puts ("  " * indent) + check.description.ljust(72) + (" # !  " + check.status.inspect).red
+          false
         end
       end
       
-      speck.children.each {|speck| Spark.playback speck, indent }
+      child_checks = speck.children.inject([[],[]]) do |children_checks, speck|
+        child_checks = Spark.playback speck, indent
+        children_checks.map.with_index {|e,i| e += child_checks[i] }
+      end
+      checks = checks.map.with_index {|e,i| e += child_checks[i] }
+      
+      indent -= 1
+      
+      puts "#{("  " * indent)}(#{checks.first.size} of #{checks.flatten.size})"
+      
+      return checks
     end
     
   end
