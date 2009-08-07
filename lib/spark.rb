@@ -16,6 +16,7 @@ module Spark
     # - Printing data about each `Check` and its result
     # - Recursively repeating the above for each child `Speck`
     def playback speck
+      puts speck.target.inspect
       speck.execute
       
       speck.checks.each do |check|
