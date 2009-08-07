@@ -41,7 +41,10 @@ module Spark
       
       indent -= 1
       
-      puts "#{("  " * indent)}(#{checks.first.size} of #{checks.flatten.size})"
+      # TODO: FUCK FUCK FUCK THIS IS EVEN UGLIER THAN THE ABOVE CODE!!!!1!1
+      puts ("  " * indent) + "(#{
+        checks.first.size == checks.flatten.size ? checks.first.size.to_s.green : checks.first.size.to_s.red} of #{
+        checks.flatten.size})"
       
       return checks
     end
