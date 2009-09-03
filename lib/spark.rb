@@ -25,10 +25,10 @@ module Spark
       checks = speck.checks.partition do |check|
         begin
           check.execute
-          puts ("  " * indent) + check.target.ljust(72) + (" # " + check.expectation).green
+          puts ("  " * indent) + check.description.ljust(72) + (" # => " + check.status.inspect).green
           true
         rescue Speck::Exception::CheckFailed
-          puts ("  " * indent) + check.target.ljust(72) + (" # " + check.expectation).red
+          puts ("  " * indent) + check.description.ljust(72) + (" # !  " + check.status.inspect).red
           false
         end
       end
