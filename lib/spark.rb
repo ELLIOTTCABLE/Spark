@@ -42,7 +42,7 @@ module Spark
     # TODO: FUCK FUCK FUCK THIS IS EVEN UGLIER THAN THE ABOVE CODE!!!!1!1
     puts ("  " * indent) + "(#{
       checks.first.size == checks.flatten.size ? checks.first.size.to_s.green : checks.first.size.to_s.red} of #{
-      checks.flatten.size})"
+      checks.flatten.size})" unless checks.flatten.size.zero?
     
     return checks
   end
