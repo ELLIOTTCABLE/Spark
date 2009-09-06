@@ -26,9 +26,15 @@ module Spark
         Object.send :task, name do
           [@files].flatten.map {|p| p.include?("*") ? Dir[p] : p }.flatten
             .each {|f| require File.expand_path(f) }
-          Speck::unbound.each {|speck| Spark.playback speck }
+          Speck::unbound.each do |speck|
+            puts '-~- ' * 10 + '*' + ' -~-' * 10 if Speck::unbound.size > 1
+            Spark.playback speck
+          end
+          puts '-~- ' * 10 + '*' + ' -~-' * 10 if Speck::unbound.size > 1
         end
       end
+      
     end
+    
   end
 end
