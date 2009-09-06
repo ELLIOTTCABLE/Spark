@@ -26,11 +26,14 @@ module Spark
         Object.send :task, name do
           [@files].flatten.map {|p| p.include?("*") ? Dir[p] : p }.flatten
             .each {|f| require File.expand_path(f) }
-          Speck::unbound.each do |speck|
+          checks = Speck::unbound.inject(Array.new) do |acc, speck|
             puts '-~- ' * 10 + '*' + ' -~-' * 10 if Speck::unbound.size > 1
-            Spark.playback speck
+            acc << Spark.playback(speck)
           end
           puts '-~- ' * 10 + '*' + ' -~-' * 10 if Speck::unbound.size > 1
+          
+          exit(1) if checks.map {|c| c[:failed].size }
+            .inject {|acc,e| acc + e } > 0
         end
       end
       
