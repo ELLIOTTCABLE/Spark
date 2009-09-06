@@ -22,10 +22,14 @@ module Spark
     
     checks = speck.checks.group_by do |check|
       begin
-        check.execute
-        puts ("  " * indent) + (" # " + check.status.to_s).green
+        check.execute unless check.status
       rescue Speck::Exception::CheckFailed
-        puts ("  " * indent) + (" # " + check.status.to_s).red
+      end
+      puts ("  " * indent) + case check.status
+      when :passed then (" # " + check.status.to_s).green
+      when :failed then (" # " + check.status.to_s).red
+      when :future then (" # " + check.status.to_s).yellow
+      else              (" # " + check.status.to_s).cyan
       end
       check.status
     end
@@ -50,10 +54,13 @@ module Spark
     
     # TODO: FUCK FUCK FUCK THIS IS EVEN UGLIER THAN THE ABOVE CODE!!!!1!1
     total = checks.inject(0) {|t, (k,v)| t + v.size }
+    passed = checks[:passed].size
+    failed = checks[:failed].size
+    other = checks.inject(0) {|t, (k,v)| t += v.size unless [:passed, :failed].include? k; t }
     puts ("  " * indent) + "(#{
       checks[:failed].size > 0 ?
         checks[:passed].size.to_s.red : checks[:passed].size.to_s.green
-      } of #{total})" unless total.zero?
+      }#{other &&! other.zero? ? '/' + other.to_s.cyan : nil } of #{total})" unless total.zero?
     
     return checks
   end
