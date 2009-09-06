@@ -20,29 +20,40 @@ module Spark
     
     speck.execute
     
-    checks = speck.checks.partition do |check|
+    checks = speck.checks.group_by do |check|
       begin
         check.execute
-        puts ("  " * indent) + (" # => " + check.status.inspect).green
-        true
+        puts ("  " * indent) + (" # " + check.status.to_s).green
       rescue Speck::Exception::CheckFailed
-        puts ("  " * indent) + (" # !  " + check.status.inspect).red
-        false
+        puts ("  " * indent) + (" # " + check.status.to_s).red
       end
+      check.status
     end
     
-    child_checks = speck.children.inject([[],[]]) do |children_checks, speck|
-      child_checks = Spark.playback speck, indent
-      children_checks.map.with_index {|e,i| e += child_checks[i] }
+    child_checks = speck.children
+      .inject({:passed => [], :failed => []}) do |children_checks, speck|
+        child_checks = Spark.playback speck, indent
+        child_checks.each do |k,v|
+          children_checks[k] ||= Array.new
+          children_checks[k] += v || Array.new
+        end
+        children_checks
+      end
+    
+    child_checks.each do |k,v|
+      checks[k] ||= Array.new
+      checks[k] += v || Array.new
     end
-    checks = checks.map.with_index {|e,i| e += child_checks[i] }
+    
     
     indent -= 1
     
     # TODO: FUCK FUCK FUCK THIS IS EVEN UGLIER THAN THE ABOVE CODE!!!!1!1
+    total = checks.inject(0) {|t, (k,v)| t + v.size }
     puts ("  " * indent) + "(#{
-      checks.first.size == checks.flatten.size ? checks.first.size.to_s.green : checks.first.size.to_s.red} of #{
-      checks.flatten.size})" unless checks.flatten.size.zero?
+      checks[:failed].size > 0 ?
+        checks[:passed].size.to_s.red : checks[:passed].size.to_s.green
+      } of #{total})" unless total.zero?
     
     return checks
   end
