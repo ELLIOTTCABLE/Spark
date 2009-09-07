@@ -15,7 +15,7 @@ module Spark
   # - Recursively repeating the above for each child `Speck`
   def self.playback speck, indent = 0
     # TODO: FUCK FUCK FUCK THIS IS UGLY CODE ARRRGH
-    puts ("  " * indent) + speck.target.inspect
+    puts ("  " * indent) + speck.target.inspect if speck.target
     indent += 1
     
     speck.execute
