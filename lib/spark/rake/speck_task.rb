@@ -1,3 +1,5 @@
+require 'spark'
+
 require 'rake'
 require 'rake/tasklib'
 
