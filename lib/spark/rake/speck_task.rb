@@ -17,6 +17,8 @@ module Spark
         @desc = "Recursively runs all unbound Specks"
         
         yield self if block_given?
+        @files << 'specifications/**/*_specs.rb' if @files.empty?
+        
         self.files += ENV['SPECK_FILES'].split(/[ ,]/) if ENV['SPECK_FILES']
         
         define
