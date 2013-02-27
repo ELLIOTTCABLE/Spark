@@ -1,6 +1,5 @@
 require 'spark'
 
-require 'rake'
 require 'rake/tasklib'
 
 module Spark
@@ -8,7 +7,7 @@ module Spark
     
     class SpeckTask < ::Rake::TaskLib
       attr_accessor :name
-      attr_accessor :desc
+      attr_accessor :description
       attr_accessor :files
       attr_accessor :batteries
       
@@ -16,7 +15,7 @@ module Spark
         @name = name
         @batteries = batteries.is_a?(Array) ? batteries : [batteries]
         @files = []
-        @desc = "Recursively runs all unbound Specks"
+        @description = "Recursively runs all unbound Specks"
         
         yield self if block_given?
         @files << 'specifications/**/*_specs.rb' if @files.empty?
@@ -27,9 +26,8 @@ module Spark
       end
       
       def define
-        # XXX: Why the hell is this necessary? God, I hate Rake.
-        Object.send :desc, @desc
-        Object.send :task, name do
+        desc @description
+        task @name do
           # TODO: AND SUDDENLY, UGLY CODES! KILOBYTES OF THEM!
           [@files].flatten.map {|p| p.include?("*") ? Dir[p] : p }.flatten
             .each {|f| require File.expand_path(f) }
