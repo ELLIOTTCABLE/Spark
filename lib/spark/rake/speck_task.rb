@@ -40,6 +40,11 @@ module Spark
           end
           puts '-~- ' * 10 + '*' + ' -~-' * 10 if targets.size > 1
           
+          if targets.size == 0
+            puts 'No specifications found.'
+            exit 1
+          end
+          
           exit(1) if checks.map {|c| c[:failed] ? c[:failed].size : 0 }
             .inject {|acc,e| acc + e } > 0
         end
