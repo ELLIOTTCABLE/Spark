@@ -14,6 +14,7 @@ issue tracker:
 
 License
 -------
-This project is licensed under the GNU Affero GPL v3, with documentation and
-comments dual–licensed also under the Creative Commons BY-SA 3.0. Specifics
-may be found in the LICENSE.text file.
+This project is licensed very openly for your use, under a variation of the ‘MIT license.’
+Details are available in [LICENSE][].
+  
+  [LICENSE]: <./LICENSE.text>
