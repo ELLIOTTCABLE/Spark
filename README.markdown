@@ -1,10 +1,8 @@
 Spark
 =====
-Pretty–printing [Rake][] tasks and other execution tools for [Speck][]
-(<http://Speck.im/>).
+Pretty–printing [Rake][] tasks and other execution tools for [Speck][].
 
-Ideas, feature requests, and bugs can be reported on [Speck][]’s [GitHub][]
-issue tracker:
+Ideas, feature requests, and bugs can be reported on Speck’s [GitHub][] issue tracker:
 
 <http://github.com/elliottcable/Speck/issues>
 

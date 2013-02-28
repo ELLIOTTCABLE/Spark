@@ -3,7 +3,7 @@ require 'speck'
 require 'spark/core_ext'
 
 module Spark
-  Version = 0
+  VERSION = 0
   
   ##
   # “Plays” a `Speck`, or `Speck:Battery`, recursively. This consists of:
